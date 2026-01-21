@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Регистрация — Renavigation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/emma/assets/css/emma.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/emma/webinar/">Renavigation</a>
+</header>
+
+<main class="container">
+  <section class="card">
+    <p class="eyebrow center">Шаг 1 из 2</p>
+    <h1 class="center">Регистрация на вебинар</h1>
+
+    <div id="form_error" class="error" style="display:none;"></div>
+
+    <form id="regForm" class="reg-form" novalidate>
+
+      <!-- CONTACT FIELDS (COLUMN) -->
+      <div class="card-inner form-block">
+        <div class="field">
+          <label for="name">Ваше имя</label>
+          <input id="name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
+        </div>
+
+        <div class="field">
+          <label for="tg">Ник в Telegram</label>
+          <input id="tg" name="tg" type="text" placeholder="@username" autocomplete="off">
+        </div>
+
+        <div class="field">
+          <label for="wa">WhatsApp</label>
+          <input id="wa" name="wa" type="tel" placeholder="+52 ..." autocomplete="tel">
+        </div>
+      </div>
+
+      <!-- REMINDER CHANNEL (CENTERED) -->
+      <div class="card-inner form-block">
+        <div class="section-title center">Где вам удобнее получать напоминания?</div>
+
+        <div class="choice-row" role="radiogroup" aria-label="Канал напоминаний">
+          <label class="choice-pill">
+            <input type="radio" name="reminder_channel" value="telegram" checked>
+            <span>Telegram</span>
+          </label>
+
+          <label class="choice-pill">
+            <input type="radio" name="reminder_channel" value="whatsapp">
+            <span>WhatsApp</span>
+          </label>
+
+          <label class="choice-pill">
+            <input type="radio" name="reminder_channel" value="both">
+            <span>И там и там</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="cta-row cta-center">
+        <button class="btn primary" type="submit">Получить доступ</button>
+        <a class="btn ghost" href="/emma/webinar/">Назад</a>
+      </div>
+
+      <!-- CONSENT (UNDER BUTTONS) -->
+      <label class="consent">
+        <input id="consent" name="consent" type="checkbox">
+        <span>
+          Даю согласие на использование моих контактов для отправки материалов вебинара согласно Политике приватности.
+        </span>
+      </label>
+
+    </form>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container muted small center">
+    Synx™ AI Agent — продукт лаборатории Logosworks-lab. © 2026.
+  </div>
+</footer>
+
+<script src="/emma/assets/js/register.js"></script>
+</body>
+</html>

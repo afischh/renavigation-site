@@ -1,0 +1,398 @@
+/* emma.css — мобильный каркас (читабельно с телефона, без бокового скролла). */
+
+:root {
+  --bg: #0b0c10;
+  --card: #12131a;
+  --text: #e8e9ee;
+  --muted: #a9acb8;
+  --line: rgba(255, 255, 255, 0.12);
+  --accent: #8ae6ff;
+  --accent2: #b9ffcc;
+
+  --radius: 16px;
+  --pad: 16px;
+  --max: 920px;
+
+  --shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(1200px 900px at 10% 0%, #11162a 0%, var(--bg) 45%, #05060a 100%);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height: 1.45;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(10, 12, 16, 0.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* центрируем бренд */
+  gap: 14px;
+}
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--text);
+}
+
+main { padding: 18px 0 36px; }
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--pad);
+  margin: 0 0 14px;
+}
+
+/* регистрация: делаем карточку более “вертикальной” на десктопе */
+.card:has(.reg-form) {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card-inner {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+  line-height: 1.12;
+  letter-spacing: 0.2px;
+}
+
+h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+p { margin: 10px 0; }
+ul { margin: 10px 0 0 18px; }
+
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.center { text-align: center; }
+
+/* buttons */
+.cta-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.cta-center { justify-content: center; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  text-decoration: none;
+  border-color: rgba(255,255,255,0.25);
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, rgba(138,230,255,0.22), rgba(185,255,204,0.14));
+  border-color: rgba(138,230,255,0.35);
+}
+
+.btn.ghost { background: transparent; }
+
+/* forms */
+.reg-form { margin-top: 10px; }
+
+.form-block { margin-top: 14px; }
+
+.field { margin: 0 0 12px; }
+.field:last-child { margin-bottom: 0; }
+
+label {
+  display: block;
+  font-weight: 750;
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+input, select, textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.25);
+  color: var(--text);
+  outline: none;
+  font-size: 17px;
+}
+
+input::placeholder { color: rgba(255,255,255,0.35); }
+
+input:focus {
+  border-color: rgba(138,230,255,0.45);
+  box-shadow: 0 0 0 3px rgba(138,230,255,0.12);
+}
+
+/* подсветка ошибок через JS */
+.is-invalid {
+  border-color: rgba(255,120,120,0.65) !important;
+  box-shadow: 0 0 0 3px rgba(255,120,120,0.12) !important;
+}
+
+.section-title {
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0 0 12px;
+}
+
+.choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.choice-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.03);
+  cursor: pointer;
+  user-select: none;
+  min-height: 46px;
+}
+
+.choice-pill input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.choice-pill span {
+  font-weight: 750;
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* если :has не поддерживается — ничего страшного, просто не будет подсветки выбора */
+.choice-pill:has(input:checked) {
+  background: linear-gradient(135deg, rgba(138,230,255,0.18), rgba(185,255,204,0.12));
+  border-color: rgba(138,230,255,0.35);
+}
+
+.consent {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.consent input {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin-top: 2px;
+}
+
+/* notices */
+.notice {
+  border: 1px solid rgba(138,230,255,0.35);
+  background: rgba(138,230,255,0.08);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.error {
+  border: 1px solid rgba(255,120,120,0.45);
+  background: rgba(255,120,120,0.08);
+  border-radius: 14px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+/* timer (если используется на webinar) */
+.timer-title {
+  font-weight: 800;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.timer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(72px, 1fr));
+  justify-items: center;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+
+.timer-box {
+  border: 1px solid var(--line);
+  background: rgba(0,0,0,0.25);
+  border-radius: 14px;
+  padding: 14px 10px;
+  text-align: center;
+  min-width: 72px;
+}
+
+.timer-box .num {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  line-height: 1;
+}
+
+.timer-box .lbl {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 18px 0 26px;
+  margin-top: 10px;
+}
+
+/* mobile tweaks */
+@media (max-width: 560px) {
+  h1 { font-size: 28px; }
+
+  .timer-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .timer-box .num { font-size: 24px; }
+}
+
+/* === OVERRIDES (webinar final) — put at VERY END of emma.css === */
+
+/* topbar center */
+header.topbar { justify-content: center !important; }
+header.topbar .brand { text-align: center !important; }
+
+/* webinar title smaller + centered */
+section.card.section-center h1.hero-title {
+  font-size: 22px !important;     /* меньше */
+  line-height: 1.15 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  margin: 0 0 10px !important;
+}
+
+/* subtitle bigger + centered */
+section.card.section-center p.hero-subtitle {
+  font-size: 20px !important;     /* больше */
+  font-weight: 800 !important;
+  text-align: center !important;
+  margin: 0 0 14px !important;
+  color: var(--text) !important;
+}
+
+/* all section headings centered */
+section.card.section-center h2 {
+  text-align: center !important;
+  margin: 0 0 10px !important;
+}
+
+/* keep bullets readable, but block centered */
+section.card.section-center ul.list-left {
+  display: inline-block !important;
+  text-align: left !important;
+  margin: 10px auto 0 !important;
+  padding-left: 18px !important;
+}
+
+/* timer: ensure centered */
+.timer.card-inner { text-align: center !important; }
+.timer-grid {
+  justify-items: center !important;
+  align-items: center !important;
+  margin: 0 auto 10px !important;
+}
+.timer-cta {
+  display: flex !important;
+  justify-content: center !important;
+  margin-top: 10px !important;
+}
+
+/* contacts row centered + same look */
+section.card.section-center .socials-line {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+/* make all contact buttons same "primary" style */
+section.card.section-center .socials-line .btn {
+  background: linear-gradient(135deg, rgba(138,230,255,0.22), rgba(185,255,204,0.14)) !important;
+  border-color: rgba(138,230,255,0.35) !important;
+}
+
+/* mobile: title slightly larger than now but still compact */
+@media (max-width: 560px) {
+  section.card.section-center h1.hero-title { font-size: 20px !important; }
+  section.card.section-center p.hero-subtitle { font-size: 19px !important; }
+}
