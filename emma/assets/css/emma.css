@@ -396,3 +396,20 @@ section.card.section-center .socials-line .btn {
   section.card.section-center h1.hero-title { font-size: 20px !important; }
   section.card.section-center p.hero-subtitle { font-size: 19px !important; }
 }
+
+/* webinar: дата/время как заголовок, но чуть компактнее */
+.hero-title-sub {
+  margin-top: 6px;
+  font-size: 24px;
+}
+
+/* footer: центр */
+.site-footer {
+  text-align: center;
+}
+
+/* webinar: дата/время строго по центру */
+.hero-title-sub {
+  text-align: center;
+  width: 100%;
+}
