@@ -79,7 +79,7 @@
       const data = await res.json();
       if (!data || data.ok !== true) throw new Error("Bad response");
 
-      window.location.href = "/emma/thankyou/";
+      window.location.href = "/emma/thankyou/?t=" + Date.now();
     } catch (err) {
       console.error(err);
       setError("Не удалось отправить регистрацию. Попробуй ещё раз чуть позже.");
