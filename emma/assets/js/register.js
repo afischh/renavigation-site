@@ -5,7 +5,6 @@
 
   const $ = (id) => document.getElementById(id);
 
-  // Public endpoint (no auth)
   const apiUrl = "https://logosworks.garden/api/emma/registrations";
 
   function getReminderChoice() {
@@ -13,8 +12,14 @@
     return r ? r.value : "telegram";
   }
 
+  function normalizeTg(v) {
+    v = (v || "").trim();
+    if (!v) return null;
+    return v.startsWith("@") ? v : "@" + v;
+  }
+
   function setError(msg) {
-    const box = $("form_error"); // matches current HTML
+    const box = $("form_error"); // matches emma/register/index.html
     if (!box) return;
     box.textContent = msg || "";
     box.style.display = msg ? "block" : "none";
@@ -23,12 +28,6 @@
   function setBusy(isBusy) {
     const btn = $("submitBtn");
     if (btn) btn.disabled = !!isBusy;
-  }
-
-  function normalizeTg(v) {
-    v = (v || "").trim();
-    if (!v) return null;
-    return v.startsWith("@") ? v : "@" + v;
   }
 
   form.addEventListener("submit", async (e) => {
