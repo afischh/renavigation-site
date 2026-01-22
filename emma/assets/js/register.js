@@ -1,95 +1,91 @@
+// FILE: /home/alex/renavigation-site_work/emma/assets/js/register.js
 (function () {
-  function $(id) { return document.getElementById(id); }
+  const form = document.getElementById("regForm");
+  if (!form) return;
 
-  const form = $("regForm");
-  const errBox = $("form_error");
+  const $ = (id) => document.getElementById(id);
 
-  // если скрипт подключился не на той странице — тихо выходим
-  if (!form || !errBox) return;
-
-  const name = $("name");
-  const tg = $("tg");
-  const wa = $("wa");
-  const consent = $("consent");
+  // Public endpoint (no auth)
+  const apiUrl = "https://logosworks.garden/api/emma/registrations";
 
   function getReminderChoice() {
-    const r = document.querySelector('input[name="reminder_channel"]:checked');
+    const r = form.querySelector('input[name="reminder_channel"]:checked');
     return r ? r.value : "telegram";
+  }
+
+  function setError(msg) {
+    const box = $("form_error"); // matches current HTML
+    if (!box) return;
+    box.textContent = msg || "";
+    box.style.display = msg ? "block" : "none";
+  }
+
+  function setBusy(isBusy) {
+    const btn = $("submitBtn");
+    if (btn) btn.disabled = !!isBusy;
   }
 
   function normalizeTg(v) {
     v = (v || "").trim();
-    if (!v) return "";
+    if (!v) return null;
     return v.startsWith("@") ? v : "@" + v;
   }
 
-  function setInvalid(el, on) {
-    if (!el) return;
-    el.classList.toggle("is-invalid", !!on);
-  }
-
-  function showError(msg) {
-    errBox.textContent = msg;
-    errBox.style.display = "block";
-    errBox.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
-  function clearError() {
-    errBox.textContent = "";
-    errBox.style.display = "none";
-  }
-
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    setError("");
+    setBusy(true);
 
-    clearError();
-    setInvalid(name, false);
-    setInvalid(tg, false);
-    setInvalid(wa, false);
+    const name = ($("name")?.value || "").trim();
+    const telegram = normalizeTg($("tg")?.value || "");
+    const whatsapp = (($("wa")?.value || "").trim()) || null;
+    const consent = !!$("consent")?.checked;
 
-    const choice = getReminderChoice();
-
-    const nameVal = (name.value || "").trim();
-    const tgVal = normalizeTg(tg.value);
-    const waVal = (wa.value || "").trim();
-    const consentVal = !!consent.checked;
-
-    if (!nameVal) {
-      setInvalid(name, true);
-      showError("Укажите имя.");
+    if (!name) {
+      setError("Пожалуйста, укажи имя.");
+      setBusy(false);
+      return;
+    }
+    if (!consent) {
+      setError("Нужно согласие на обработку данных, чтобы завершить регистрацию.");
+      setBusy(false);
+      return;
+    }
+    if (!telegram && !whatsapp) {
+      setError("Нужен Telegram или WhatsApp, чтобы отправить напоминание/материалы.");
+      setBusy(false);
       return;
     }
 
-    if (!consentVal) {
-      showError("Поставьте галочку согласия, чтобы получить доступ.");
-      return;
+    const payload = {
+      name,
+      telegram,
+      whatsapp,
+      reminder_channel: getReminderChoice(),
+      consent: true,
+    };
+
+    try {
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const t = await res.text().catch(() => "");
+        throw new Error("HTTP " + res.status + (t ? (": " + t) : ""));
+      }
+
+      const data = await res.json();
+      if (!data || data.ok !== true) throw new Error("Bad response");
+
+      window.location.href = "/emma/thankyou/";
+    } catch (err) {
+      console.error(err);
+      setError("Не удалось отправить регистрацию. Попробуй ещё раз чуть позже.");
+    } finally {
+      setBusy(false);
     }
-
-    if (choice === "telegram") {
-      if (!tgVal) {
-        setInvalid(tg, true);
-        showError("Укажите ник в Telegram.");
-        return;
-      }
-    } else if (choice === "whatsapp") {
-      if (!waVal) {
-        setInvalid(wa, true);
-        showError("Укажите номер WhatsApp.");
-        return;
-      }
-    } else { // both
-      if (!tgVal || !waVal) {
-        setInvalid(tg, !tgVal);
-        setInvalid(wa, !waVal);
-        showError("Для варианта «И там и там» нужны и Telegram, и WhatsApp.");
-        return;
-      }
-    }
-
-    // нормализуем ник обратно в поле
-    tg.value = tgVal;
-
-    // MVP: пока просто ведём на thankyou
-    window.location.href = "/emma/thankyou/";
   });
 })();
