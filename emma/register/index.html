@@ -17,8 +17,8 @@
     <p class="eyebrow center">Шаг 1 из 2</p>
     <h1 class="center">Регистрация на вебинар</h1>
 
-    <!-- JS ждёт id="formError" -->
-    <div id="formError" class="error" style="display:none;"></div>
+    <!-- IMPORTANT: JS writes errors here -->
+    <div id="form_error" class="error" style="display:none;"></div>
 
     <form id="regForm" class="reg-form" novalidate>
 
@@ -29,16 +29,14 @@
           <input id="name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name">
         </div>
 
-        <!-- JS ждёт id="telegram" -->
         <div class="field">
-          <label for="telegram">Ник в Telegram</label>
-          <input id="telegram" name="telegram" type="text" placeholder="@username" autocomplete="off">
+          <label for="tg">Ник в Telegram</label>
+          <input id="tg" name="tg" type="text" placeholder="@username" autocomplete="off">
         </div>
 
-        <!-- JS ждёт id="whatsapp" -->
         <div class="field">
-          <label for="whatsapp">WhatsApp</label>
-          <input id="whatsapp" name="whatsapp" type="tel" placeholder="+52 ..." autocomplete="tel">
+          <label for="wa">WhatsApp</label>
+          <input id="wa" name="wa" type="tel" placeholder="+52 ..." autocomplete="tel">
         </div>
       </div>
 
@@ -66,7 +64,6 @@
 
       <!-- ACTIONS -->
       <div class="cta-row cta-center">
-        <!-- JS ждёт id="submitBtn" -->
         <button id="submitBtn" class="btn primary" type="submit">Получить доступ</button>
         <a class="btn ghost" href="/emma/webinar/">Назад</a>
       </div>
@@ -74,9 +71,7 @@
       <!-- CONSENT -->
       <label class="consent">
         <input id="consent" name="consent" type="checkbox">
-        <span>
-          Даю согласие на использование моих контактов для отправки материалов вебинара согласно Политике приватности.
-        </span>
+        <span>Даю согласие на использование моих контактов для отправки материалов вебинара согласно Политике приватности.</span>
       </label>
 
     </form>
@@ -89,6 +84,7 @@
   </div>
 </footer>
 
+<!-- cache-bust: keep current SHA or bump manually -->
 <script src="/emma/assets/js/register.js?v=f9b6894"></script>
 </body>
 </html>
