@@ -413,3 +413,34 @@ section.card.section-center .socials-line .btn {
   text-align: center;
   width: 100%;
 }
+
+/* --- Emma: thankyou mobile-first tweaks --- */
+
+.thankyou-card{
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thankyou-check{
+  font-size: 54px;
+  line-height: 1;
+  margin: 6px auto 10px;
+}
+
+.btn-block{
+  width: 100%;
+}
+
+@media (max-width: 640px){
+  .thankyou-card{
+    padding: 18px 16px;
+    border-radius: 18px;
+  }
+  .thankyou-check{
+    font-size: 52px;
+  }
+  .cta-row.cta-center{
+    width: 100%;
+  }
+}
