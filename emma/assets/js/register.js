@@ -5,7 +5,9 @@
 
   const $ = (id) => document.getElementById(id);
 
-  const apiUrl = "https://logosworks.garden/api/emma/registrations";
+  const apiUrl = "https://dockanddata.logosworks.garden/emma/intake/submit";
+  const serviceType = "individual_navigation_session";
+  const formId = "renavigation_webinar_register_v2";
 
   function getReminderChoice() {
     const r = form.querySelector('input[name="reminder_channel"]:checked');
@@ -16,6 +18,14 @@
     v = (v || "").trim();
     if (!v) return null;
     return v.startsWith("@") ? v : "@" + v;
+  }
+
+  function getTimezone() {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
+    } catch (_) {
+      return "UTC";
+    }
   }
 
   function setError(msg) {
@@ -57,11 +67,18 @@
     }
 
     const payload = {
-      name,
-      telegram,
-      whatsapp,
-      reminder_channel: getReminderChoice(),
+      name: name,
+      contact: telegram || whatsapp,
+      service_type: serviceType,
+      timezone: getTimezone(),
       consent: true,
+      form_id: formId,
+      short_message: [
+        "origin=" + window.location.origin,
+        "telegram=" + (telegram || ""),
+        "whatsapp=" + (whatsapp || ""),
+        "reminder_channel=" + getReminderChoice(),
+      ].join("; "),
     };
 
     try {
@@ -77,7 +94,10 @@
       }
 
       const data = await res.json();
-      if (!data || data.ok !== true) throw new Error("Bad response");
+      if (!data || data.ok !== true) {
+        const reason = data && data.error ? String(data.error) : "bad_response";
+        throw new Error(reason);
+      }
 
       window.location.href = "/emma/thankyou/?t=" + Date.now();
     } catch (err) {
